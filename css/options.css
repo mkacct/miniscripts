@@ -48,13 +48,15 @@ nav > button {
 	padding: 0.5em 1em;
 }
 
-footer {
-	margin-top: 1em;
-	text-align: center;
-}
-
 nav {border-right: 1px solid gray;}
 main {flex-grow: 1}
+
+a {
+	color: dodgerblue;
+	text-decoration: none;
+}
+
+a:hover {text-decoration: underline;}
 
 @media (prefers-color-scheme: light) {
 	body {
