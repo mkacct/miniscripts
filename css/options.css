@@ -1,0 +1,67 @@
+body {
+	margin: 0;
+	background-color: #171717;
+	color: white;
+	display: flex;
+	overflow: hidden;
+	font-size: 1em;
+}
+
+h1 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+h1, h2 {cursor: default;}
+
+nav, main {
+	height: 100vh;
+	padding: 1em 3em;
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+nav > * {width: calc((100vw - 6em - 1px) / 4);}
+
+button {
+	white-space: nowrap;
+	overflow: hidden;
+	border-style: none;
+	outline: none;
+	border-radius: 0;
+	background-color: inherit;
+	color: inherit;
+	text-align: left;
+	width: 100%;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: inherit;
+	text-overflow: ellipsis;
+}
+
+button:hover, button.selected {background-color: #373737}
+button:active {background-color: #272727}
+button:focus-visible {outline: 2px solid gray;}
+
+nav > button {
+	display: block;
+	padding: 0.5em 1em;
+}
+
+footer {
+	margin-top: 1em;
+	text-align: center;
+}
+
+nav {border-right: 1px solid gray;}
+main {flex-grow: 1}
+
+@media (prefers-color-scheme: light) {
+	body {
+		background-color: white;
+		color: black;
+	}
+	
+	button:hover {background-color: #dfdfdf}
+	button:active {background-color: #efefef}
+}
