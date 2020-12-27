@@ -56,12 +56,12 @@ nav > button {
 }
 
 nav {
-	width: calc(100vw / 4 + 6em + 1px);
+	width: 360px;
 	border-right: 1px solid gray;
 }
 
 main {
-	width: calc(100vw - (100vw / 4 + 6em + 1px));
+	left: 361px;
 	right: 0;
 }
 
@@ -84,7 +84,7 @@ dialog {
 	background-color: inherit;
 	color: inherit;
 	border: 1px solid gray;
-	width: 320px;
+	width: 360px;
 }
 
 dialog::backdrop {background-color: rgba(0, 0, 0, 0.5);}
@@ -143,6 +143,12 @@ a {
 
 a:hover {text-decoration: underline;}
 
+.appIcon {
+	margin-right: 0.5em;
+	height: 1em;
+	vertical-align: -0.25ex;
+}
+
 @media (prefers-color-scheme: light) {
 	body {
 		background-color: white;
@@ -151,4 +157,16 @@ a:hover {text-decoration: underline;}
 	
 	button:not([disabled]):hover, button.selected {background-color: #dfdfdf}
 	button:not([disabled]):active {background-color: #efefef}
+}
+
+@media (max-width: 720px) {
+	nav {
+		width: 90px;
+		padding: 1em;
+	}
+	
+	nav > * {text-align: center;}
+	.wideOnly {display: none;}
+	main {left: 91px;}
+	.appIcon, nav button svg {margin: 0;}
 }
