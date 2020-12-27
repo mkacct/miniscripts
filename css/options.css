@@ -2,7 +2,6 @@ body {
 	margin: 0;
 	background-color: #171717;
 	color: white;
-	display: flex;
 	overflow: hidden;
 	font-size: 1em;
 }
@@ -12,16 +11,16 @@ h1 {
 	text-overflow: ellipsis;
 }
 
-h1, h2 {cursor: default;}
+h1, h2, h3, #noScripts {cursor: default;}
 
 nav, main {
+	position: fixed;
 	height: 100vh;
 	padding: 1em 3em;
 	box-sizing: border-box;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
-
-nav > * {width: calc((100vw - 6em - 1px) / 4);}
 
 button {
 	white-space: nowrap;
@@ -32,24 +31,107 @@ button {
 	background-color: inherit;
 	color: inherit;
 	text-align: left;
-	width: 100%;
 	cursor: pointer;
 	font-family: inherit;
 	font-size: inherit;
 	text-overflow: ellipsis;
-}
-
-button:hover, button.selected {background-color: #373737}
-button:active {background-color: #272727}
-button:focus-visible {outline: 2px solid gray;}
-
-nav > button {
-	display: block;
 	padding: 0.5em 1em;
 }
 
-nav {border-right: 1px solid gray;}
-main {flex-grow: 1}
+button:not([disabled]):hover, button.selected {background-color: #373737}
+button:not([disabled]):active {background-color: #272727}
+button:focus-visible {outline: 2px solid gray;}
+
+button[disabled] {
+	color: gray;
+	cursor: default;
+}
+
+nav > button {
+	display: block;
+	width: 100%;
+}
+
+nav {
+	width: calc(100vw / 4 + 6em + 1px);
+	border-right: 1px solid gray;
+}
+
+main {
+	width: calc(100vw - (100vw / 4 + 6em + 1px));
+	right: 0;
+}
+
+.warning {
+	border-radius: 1em;
+	padding: 1em;
+	text-align: center;
+	background-color: #ffcccc;
+	font-weight: bold;
+	color: red;
+}
+
+#toolbar {
+	margin-top: 1.5em;
+	margin-bottom: 1em;
+}
+
+dialog {
+	padding: 1.5em;
+	background-color: inherit;
+	color: inherit;
+	border: 1px solid gray;
+	width: 320px;
+}
+
+dialog::backdrop {background-color: rgba(0, 0, 0, 0.5);}
+dialog h3 {margin-top: 0;}
+
+dialog label {
+	display: block;
+	margin-bottom: 1em;
+}
+
+input, textarea {
+	box-sizing: border-box;
+	width: 100%;
+	margin-top: 0.5em;
+	resize: none;
+	background-color: inherit;
+	color: inherit;
+	border: 1px solid gray;
+	border-radius: 0;
+	font-family: inherit;
+	padding: 0.5em;
+}
+
+input:focus, textarea:focus {
+	border-color: dodgerblue;
+	outline: none;
+}
+
+.dialogButtons {text-align: right;}
+.dialogButtons button {border: 1px solid gray;}
+.dialogButtons button:not(:first-child) {margin-left: 1em;}
+
+textarea {font-family: monospace;}
+
+#noScripts {
+	color: gray;
+	text-align: center;
+	margin: 1em 0;
+	display: none;
+}
+
+#list > div:first-child {border-top: 1px solid gray;}
+
+#list > div {
+	display: flex;
+	border-bottom: 1px solid gray;
+}
+
+.editButton {flex-grow: 1;}
+#list button:not(.editButton) {flex-shrink: 0;}
 
 a {
 	color: dodgerblue;
@@ -64,6 +146,6 @@ a:hover {text-decoration: underline;}
 		color: black;
 	}
 	
-	button:hover {background-color: #dfdfdf}
-	button:active {background-color: #efefef}
+	button:not([disabled]):hover, button.selected {background-color: #dfdfdf}
+	button:not([disabled]):active {background-color: #efefef}
 }

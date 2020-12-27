@@ -2,7 +2,8 @@
 
 function execScript(id) {
 	chrome.storage.sync.get((res) => {
-		chrome.tabs.executeScript({code: res.scripts[id].code});
+		chrome.tabs.executeScript({code: res.scripts.find((item) => {return item.id == id;}).code});
+		window.close();
 	});
 }
 
@@ -21,7 +22,7 @@ window.addEventListener("load", () => {
 			for (let i = 0; i < scripts.length; i++) {
 				const el = document.createElement("button");
 				el.appendChild(document.createTextNode(scripts[i].title));
-				el.addEventListener("click", () => {execScript(i);});
+				el.addEventListener("click", () => {execScript(scripts[i].id);});
 				list.appendChild(el);
 			}
 		} else {
