@@ -47,6 +47,9 @@ button[disabled] {
 	cursor: default;
 }
 
+button svg {margin-right: 1em;}
+#list button svg {margin-right: 0;}
+
 nav > button {
 	display: block;
 	width: 100%;
