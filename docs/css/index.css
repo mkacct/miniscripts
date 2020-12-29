@@ -10,7 +10,7 @@ main {
 	border: 1px solid gray;
 	background-color: #171717;
 	display: inline-block;
-	padding: 0 1em;
+	padding: 0 1em 1em;
 }
 
 .appIcon {
@@ -41,8 +41,6 @@ li a, li.gray {
 a svg {color: white;}
 li svg {margin-right: 0.5em;}
 .gray {color: gray;}
-
-.mk {margin-bottom: 1em;}
 
 @media (prefers-color-scheme: light) {
 	body {
