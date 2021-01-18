@@ -1,0 +1,54 @@
+body {
+	font-family: system-ui, sans-serif;
+	background-color: #070707;
+	color: white;
+	text-align: center;
+	margin: 1em;
+}
+
+main {
+	border: 1px solid gray;
+	background-color: #171717;
+	display: inline-block;
+	padding: 0 1em 1em;
+}
+
+.appIcon {
+	margin-right: 0.5em;
+	height: 1em;
+	vertical-align: -0.25ex;
+}
+
+a {
+	color: dodgerblue;
+	text-decoration: none;
+}
+
+a:hover {text-decoration: underline;}
+
+ul {
+	list-style: none;
+	padding: 0;
+	text-align: left;
+	font-size: 1.2em;
+}
+
+li a, li.gray {
+	display: block;
+	padding: 0.5em;
+}
+
+a svg {color: white;}
+li svg {margin-right: 0.5em;}
+.gray {color: gray;}
+
+@media (prefers-color-scheme: light) {
+	body {
+		background-color: #efefef;
+		color: black;
+	}
+	
+	a svg {color: black;}
+	
+	main {background-color: white;}
+}
