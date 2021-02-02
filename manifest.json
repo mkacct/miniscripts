@@ -1,6 +1,6 @@
 {
 	"name": "Miniscripts",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "Save scripts to run on any page",
 	"icons": {
 		"16": "res/icon_16.png",
@@ -13,9 +13,14 @@
 		"default_popup": "popup.html"
 	},
 	"options_page": "options.html",
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": false
+	},
 	"permissions": [
 		"storage",
-		"activeTab"
+		"activeTab",
+		"notifications"
 	],
 	"manifest_version": 2
 }
