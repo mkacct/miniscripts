@@ -163,5 +163,6 @@ window.addEventListener("load", () => {
 	document.querySelector("dialog button[type='button']").addEventListener("click", () => {
 		document.querySelector("dialog").close();
 	});
+	document.querySelector("#versionNumber").appendChild(document.createTextNode(chrome.runtime.getManifest().version));
 	loadScripts();
 });
