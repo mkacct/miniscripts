@@ -2,8 +2,12 @@
 
 function execScript(id) {
 	chrome.storage.sync.get((res) => {
-		chrome.tabs.executeScript({code: res.scripts.find((item) => {return item.id == id;}).code}, () => {
-			window.close();
+		chrome.tabs.executeScript({code: res.scripts.find((item) => {return item.id == id;}).code}, (res) => {
+			if (res) {
+				window.close();
+			} else {
+				alert("You can't use Miniscripts on this page.");
+			}
 		});
 	});
 }
