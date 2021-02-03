@@ -31,7 +31,11 @@ chrome.notifications.onClicked.addListener((id) => {
 	if (notificationActions[id]) {
 		switch (notificationActions[id]) {
 			case "<options>":
-				window.open(chrome.runtime.getURL("options.html"));
+				if (chrome.runtime.openOptionsPage) {
+					chrome.runtime.openOptionsPage();
+				} else {
+					window.open(chrome.runtime.getURL("options.html"));
+				}
 				break;
 			default:
 				window.open(notificationActions[id]);
