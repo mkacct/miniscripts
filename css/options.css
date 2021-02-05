@@ -38,8 +38,9 @@ button {
 	padding: 0.5em 1em;
 }
 
-button:not([disabled]):hover, button.selected {background-color: #373737}
+button:not([disabled]):hover {background-color: #373737}
 button:not([disabled]):active {background-color: #272727}
+button:not([disabled]).selected {background-color: #474747}
 button:focus-visible {outline: 2px solid gray;}
 
 button[disabled] {
@@ -155,8 +156,9 @@ a:hover {text-decoration: underline;}
 		color: black;
 	}
 	
-	button:not([disabled]):hover, button.selected {background-color: #dfdfdf}
+	button:not([disabled]):hover {background-color: #dfdfdf}
 	button:not([disabled]):active {background-color: #efefef}
+	button:not([disabled]).selected {background-color: #cfcfcf}
 }
 
 @media (max-width: 720px) {

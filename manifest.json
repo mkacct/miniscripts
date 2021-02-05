@@ -1,6 +1,6 @@
 {
 	"name": "Miniscripts",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Save scripts to run on any page",
 	"icons": {
 		"16": "res/icon_16.png",
