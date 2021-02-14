@@ -9,6 +9,7 @@ let editingId = "";
 function loadScripts() {
 	chrome.storage.sync.get((res) => {
 		document.querySelector("#noScripts").style.display = "none";
+		document.querySelector("#sortButton").disabled = false;
 		scripts = res.scripts;
 		if (!scripts) {scripts = [];}
 		const list = document.querySelector("#list");
@@ -72,6 +73,7 @@ function loadScripts() {
 			}
 		} else {
 			document.querySelector("#noScripts").style.display = "block";
+			document.querySelector("#sortButton").disabled = true;
 		}
 	});
 }
@@ -97,19 +99,17 @@ function setupDialog() {
 
 chrome.storage.onChanged.addListener(loadScripts);
 
+function setTab(tabName) {
+	document.querySelectorAll("main > div").forEach((item) => {item.style.display = "none";});
+	document.querySelector("#" + tabName + "Content").style.display = "block";
+	document.querySelectorAll("nav > button").forEach((item) => {item.className = "";});
+	document.querySelector("#" + tabName + "Tab").className = "selected";
+};
+
 window.addEventListener("load", () => {
-	document.querySelector("#scriptsTab").addEventListener("click", () => {
-		document.querySelector("#scriptsContent").style.display = "block";
-		document.querySelector("#aboutContent").style.display = "none";
-		document.querySelector("#scriptsTab").className = "selected";
-		document.querySelector("#aboutTab").className = "";
-	});
-	document.querySelector("#aboutTab").addEventListener("click", () => {
-		document.querySelector("#aboutContent").style.display = "block";
-		document.querySelector("#scriptsContent").style.display = "none";
-		document.querySelector("#aboutTab").className = "selected";
-		document.querySelector("#scriptsTab").className = "";
-	});
+	document.querySelector("#scriptsTab").addEventListener("click", () => {setTab("scripts");});
+	document.querySelector("#importExportTab").addEventListener("click", () => {setTab("importExport");});
+	document.querySelector("#aboutTab").addEventListener("click", () => {setTab("about");});
 	document.querySelector("#addButton").addEventListener("click", () => {
 		dialogPurpose = 0;
 		document.querySelector("dialog input").value = "";
@@ -123,6 +123,13 @@ window.addEventListener("load", () => {
 		document.querySelector("dialog textarea").value = "";
 		setupDialog();
 		document.querySelector("dialog").showModal();
+	});
+	document.querySelector("#sortButton").addEventListener("click", () => {
+		if (confirm("The current order will be discarded.")) {
+			const newScripts = scripts.slice();
+			newScripts.sort((a, b) => {return a.title.localeCompare(b.title);});
+			chrome.storage.sync.set({scripts: newScripts});
+		}
 	});
 	document.querySelector("dialog input").addEventListener("input", setupDialog);
 	document.querySelector("dialog textarea").addEventListener("input", setupDialog);
