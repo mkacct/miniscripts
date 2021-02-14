@@ -24,12 +24,20 @@ window.addEventListener("load", () => {
 		const scripts = res.scripts;
 		if (scripts && scripts.length > 0) {
 			const list = document.querySelector("#list");
+			const listArr = [];
 			for (let i = 0; i < scripts.length; i++) {
 				const el = document.createElement("button");
 				el.appendChild(document.createTextNode(scripts[i].title));
 				el.addEventListener("click", () => {execScript(scripts[i].id);});
+				el.disabled = true;
 				list.appendChild(el);
+				listArr.push(el);
 			}
+			chrome.tabs.executeScript({code: "\"a\""}, (res) => {
+				if (res) {
+					listArr.forEach((item) => {item.disabled = false;});
+				}
+			});
 		} else {
 			document.querySelector("#noScripts").style.display = "block";
 		}
