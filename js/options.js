@@ -136,7 +136,7 @@ window.addEventListener("load", () => {
 		document.querySelector("dialog").showModal();
 	});
 	document.querySelector("#sortButton").addEventListener("click", () => {
-		if (confirm("The current order will be discarded.")) {
+		if (confirm("Sort scripts alphabetically by title? The current order will be discarded.")) {
 			const newScripts = scripts.slice();
 			newScripts.sort((a, b) => {return a.title.localeCompare(b.title);});
 			chrome.storage.sync.set({scripts: newScripts});
