@@ -127,6 +127,7 @@ textarea {font-family: monospace;}
 	display: none;
 }
 
+#list {margin-bottom: 1em;}
 #list > div:first-child {border-top: 1px solid gray;}
 
 #list > div {
