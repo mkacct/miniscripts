@@ -91,7 +91,7 @@ dialog {
 dialog::backdrop {background-color: rgba(0, 0, 0, 0.5);}
 dialog h3 {margin-top: 0;}
 
-dialog label {
+label {
 	display: block;
 	margin-bottom: 1em;
 }
@@ -149,6 +149,9 @@ a:hover {text-decoration: underline;}
 	height: 1em;
 	vertical-align: -0.25ex;
 }
+
+#importExportContent button {border: 1px solid gray;}
+#importExportContent h3 {margin-bottom: 0.5em;}
 
 @media (prefers-color-scheme: light) {
 	body {

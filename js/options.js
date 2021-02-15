@@ -68,13 +68,20 @@ function loadScripts() {
 				el.appendChild(upButton);
 				el.appendChild(downButton);
 				el.appendChild(deleteButton);
-				// el.addEventListener("click", () => {editScript(scripts[i].id);});
 				list.appendChild(el);
 			}
 		} else {
 			document.querySelector("#noScripts").style.display = "block";
 			document.querySelector("#sortButton").disabled = true;
 		}
+		const exp = [];
+		scripts.forEach((item) => {
+			exp.push({
+				title: item.title,
+				code: item.code
+			});
+		});
+		document.querySelector("#exportTA").value = JSON.stringify(exp);
 	});
 }
 
@@ -108,7 +115,11 @@ function setTab(tabName) {
 
 window.addEventListener("load", () => {
 	document.querySelector("#scriptsTab").addEventListener("click", () => {setTab("scripts");});
-	document.querySelector("#importExportTab").addEventListener("click", () => {setTab("importExport");});
+	document.querySelector("#importExportTab").addEventListener("click", () => {
+		document.querySelector("#importTA").value = "";
+		document.querySelector("#importButton").disabled = true;
+		setTab("importExport");
+	});
 	document.querySelector("#aboutTab").addEventListener("click", () => {setTab("about");});
 	document.querySelector("#addButton").addEventListener("click", () => {
 		dialogPurpose = 0;
@@ -129,6 +140,43 @@ window.addEventListener("load", () => {
 			const newScripts = scripts.slice();
 			newScripts.sort((a, b) => {return a.title.localeCompare(b.title);});
 			chrome.storage.sync.set({scripts: newScripts});
+		}
+	});
+	document.querySelector("#copyExportButton").addEventListener("click", () => {
+		document.querySelector("#exportTA").select();
+		document.execCommand("copy");
+	});
+	document.querySelector("#importTA").addEventListener("input", (e) => {
+		document.querySelector("#importButton").disabled = e.target.value.trim().length == 0;
+	});
+	document.querySelector("#importButton").addEventListener("click", () => {
+		let importScripts;
+		try {
+			importScripts = JSON.parse(document.querySelector("#importTA").value);
+			if (!Array.isArray(importScripts)) {throw new Error();}
+			importScripts.forEach((item) => {
+				if (!(typeof item.title == "string" && item.title.length > 0)) {throw new Error();}
+				if (!(typeof item.code == "string" && item.code.length > 0)) {throw new Error();}
+			});
+		} catch (err) {
+			alert("Import data is invalid");
+			return;
+		}
+		let newScripts = scripts.slice();
+		importScripts.forEach((item) => {
+			newScripts.push({
+				id: uuidv4(),
+				title: item.title.trim(),
+				code: item.code.trim()
+			});
+		});
+		chrome.storage.sync.set({scripts: newScripts});
+		setTab("scripts");
+	});
+	document.querySelector("#deleteAllButton").addEventListener("click", () => {
+		if (prompt("All scripts will be deleted! If you're sure you want to do this, type \"DELETE\" (case sensitive):") == "DELETE") {
+			chrome.storage.sync.set({scripts: []});
+			setTab("scripts");
 		}
 	});
 	document.querySelector("dialog input").addEventListener("input", setupDialog);
