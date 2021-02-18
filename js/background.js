@@ -11,6 +11,7 @@ chrome.runtime.onMessage.addListener((message) => {
 				title: "Script Notification – Miniscripts",
 				message: message.text,
 				silent: true,
+				requireInteraction: (message.noTimeout ? true : false),
 				iconUrl: "res/icon_128.png"
 			}, (id) => {
 				if (message.notificationAction) {notificationActions[id] = message.notificationAction;}
