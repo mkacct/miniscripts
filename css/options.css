@@ -38,8 +38,9 @@ button {
 	padding: 0.5em 1em;
 }
 
-button:not([disabled]):hover, button.selected {background-color: #373737}
+button:not([disabled]):hover {background-color: #373737}
 button:not([disabled]):active {background-color: #272727}
+button:not([disabled]).selected {background-color: #3f3f3f}
 button:focus-visible {outline: 2px solid gray;}
 
 button[disabled] {
@@ -90,7 +91,7 @@ dialog {
 dialog::backdrop {background-color: rgba(0, 0, 0, 0.5);}
 dialog h3 {margin-top: 0;}
 
-dialog label {
+label {
 	display: block;
 	margin-bottom: 1em;
 }
@@ -126,6 +127,7 @@ textarea {font-family: monospace;}
 	display: none;
 }
 
+#list {margin-bottom: 1em;}
 #list > div:first-child {border-top: 1px solid gray;}
 
 #list > div {
@@ -149,14 +151,18 @@ a:hover {text-decoration: underline;}
 	vertical-align: -0.25ex;
 }
 
+#importExportContent button {border: 1px solid gray;}
+#importExportContent h3 {margin-bottom: 0.5em;}
+
 @media (prefers-color-scheme: light) {
 	body {
 		background-color: white;
 		color: black;
 	}
 	
-	button:not([disabled]):hover, button.selected {background-color: #dfdfdf}
+	button:not([disabled]):hover {background-color: #dfdfdf}
 	button:not([disabled]):active {background-color: #efefef}
+	button:not([disabled]).selected {background-color: #d7d7d7}
 }
 
 @media (max-width: 720px) {

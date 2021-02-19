@@ -9,6 +9,7 @@ let editingId = "";
 function loadScripts() {
 	chrome.storage.sync.get((res) => {
 		document.querySelector("#noScripts").style.display = "none";
+		document.querySelector("#sortButton").disabled = false;
 		scripts = res.scripts;
 		if (!scripts) {scripts = [];}
 		const list = document.querySelector("#list");
@@ -67,12 +68,20 @@ function loadScripts() {
 				el.appendChild(upButton);
 				el.appendChild(downButton);
 				el.appendChild(deleteButton);
-				// el.addEventListener("click", () => {editScript(scripts[i].id);});
 				list.appendChild(el);
 			}
 		} else {
 			document.querySelector("#noScripts").style.display = "block";
+			document.querySelector("#sortButton").disabled = true;
 		}
+		const exp = [];
+		scripts.forEach((item) => {
+			exp.push({
+				title: item.title,
+				code: item.code
+			});
+		});
+		document.querySelector("#exportTA").value = JSON.stringify(exp);
 	});
 }
 
@@ -97,19 +106,21 @@ function setupDialog() {
 
 chrome.storage.onChanged.addListener(loadScripts);
 
+function setTab(tabName) {
+	document.querySelectorAll("main > div").forEach((item) => {item.style.display = "none";});
+	document.querySelector("#" + tabName + "Content").style.display = "block";
+	document.querySelectorAll("nav > button").forEach((item) => {item.className = "";});
+	document.querySelector("#" + tabName + "Tab").className = "selected";
+};
+
 window.addEventListener("load", () => {
-	document.querySelector("#scriptsTab").addEventListener("click", () => {
-		document.querySelector("#scriptsContent").style.display = "block";
-		document.querySelector("#aboutContent").style.display = "none";
-		document.querySelector("#scriptsTab").className = "selected";
-		document.querySelector("#aboutTab").className = "";
+	document.querySelector("#scriptsTab").addEventListener("click", () => {setTab("scripts");});
+	document.querySelector("#importExportTab").addEventListener("click", () => {
+		document.querySelector("#importTA").value = "";
+		document.querySelector("#importButton").disabled = true;
+		setTab("importExport");
 	});
-	document.querySelector("#aboutTab").addEventListener("click", () => {
-		document.querySelector("#aboutContent").style.display = "block";
-		document.querySelector("#scriptsContent").style.display = "none";
-		document.querySelector("#aboutTab").className = "selected";
-		document.querySelector("#scriptsTab").className = "";
-	});
+	document.querySelector("#aboutTab").addEventListener("click", () => {setTab("about");});
 	document.querySelector("#addButton").addEventListener("click", () => {
 		dialogPurpose = 0;
 		document.querySelector("dialog input").value = "";
@@ -123,6 +134,50 @@ window.addEventListener("load", () => {
 		document.querySelector("dialog textarea").value = "";
 		setupDialog();
 		document.querySelector("dialog").showModal();
+	});
+	document.querySelector("#sortButton").addEventListener("click", () => {
+		if (confirm("Sort scripts alphabetically by title? The current order will be discarded.")) {
+			const newScripts = scripts.slice();
+			newScripts.sort((a, b) => {return a.title.localeCompare(b.title);});
+			chrome.storage.sync.set({scripts: newScripts});
+		}
+	});
+	document.querySelector("#copyExportButton").addEventListener("click", () => {
+		document.querySelector("#exportTA").select();
+		document.execCommand("copy");
+	});
+	document.querySelector("#importTA").addEventListener("input", (e) => {
+		document.querySelector("#importButton").disabled = e.target.value.trim().length == 0;
+	});
+	document.querySelector("#importButton").addEventListener("click", () => {
+		let importScripts;
+		try {
+			importScripts = JSON.parse(document.querySelector("#importTA").value);
+			if (!Array.isArray(importScripts)) {throw new Error();}
+			importScripts.forEach((item) => {
+				if (!(typeof item.title == "string" && item.title.length > 0)) {throw new Error();}
+				if (!(typeof item.code == "string" && item.code.length > 0)) {throw new Error();}
+			});
+		} catch (err) {
+			alert("Import data is invalid");
+			return;
+		}
+		let newScripts = scripts.slice();
+		importScripts.forEach((item) => {
+			newScripts.push({
+				id: uuidv4(),
+				title: item.title.trim(),
+				code: item.code.trim()
+			});
+		});
+		chrome.storage.sync.set({scripts: newScripts});
+		setTab("scripts");
+	});
+	document.querySelector("#deleteAllButton").addEventListener("click", () => {
+		if (prompt("All scripts will be deleted! If you're sure you want to do this, type \"DELETE\" (case sensitive):") == "DELETE") {
+			chrome.storage.sync.set({scripts: []});
+			setTab("scripts");
+		}
 	});
 	document.querySelector("dialog input").addEventListener("input", setupDialog);
 	document.querySelector("dialog textarea").addEventListener("input", setupDialog);

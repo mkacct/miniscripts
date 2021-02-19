@@ -13,6 +13,7 @@
 	<nav>
 		<div><h1><img src="res/icon_128.png" alt="App icon" class="appIcon" title="Miniscripts" /><span class="wideOnly">Miniscripts</span></h1></div>
 		<button class="selected" id="scriptsTab" aria-label="Scripts" title="Scripts"><i class="fas fa-file-alt fa-fw"></i><span class="wideOnly">Scripts</span></button>
+		<button id="importExportTab" aria-label="Import/Export" title="Import/Export"><i class="fas fa-exchange-alt fa-fw"></i><span class="wideOnly">Import/Export</span></button>
 		<button id="aboutTab" aria-label="About" title="About"><i class="fas fa-info-circle fa-fw"></i><span class="wideOnly">About</span></button>
 	</nav>
 	<main>
@@ -22,10 +23,27 @@
 			<p>Scripts cannot access variables in the scope of the target page. Scripts (such as converted bookmarklets) that require this will not work correctly.</p>
 			<p>Read the <a href="https://github.com/mkacct/miniscripts/wiki" target="_blank" rel="noopener">documentation</a> to learn about advanced features.</p>
 			<div id="toolbar">
-				<button id="addButton"><i class="fas fa-plus"></i>Add script…</button><button id="convertButton"><i class="fas fa-file-import"></i>Convert bookmarklet…</button>
+				<button id="addButton"><i class="fas fa-plus fa-fw"></i>Add script…</button><button id="convertButton"><i class="fas fa-file-import fa-fw"></i>Convert bookmarklet…</button><button id="sortButton" disabled><i class="fas fa-sort-alpha-down fa-fw"></i>Sort</button>
 			</div>
 			<div id="noScripts">You have no scripts yet.</div>
 			<div id="list"></div>
+		</div>
+		<div id="importExportContent" style="display: none;">
+			<h2>Import/Export</h2>
+			<h3>Export</h3>
+			<label>
+				<small>Export data</small>
+				<textarea id="exportTA" readonly rows=9 spellcheck="false"></textarea>
+			</label>
+			<button id="copyExportButton">Copy to clipboard</button>
+			<h3>Import</h3>
+			<label>
+				<small>Import data</small>
+				<textarea id="importTA" rows=9 spellcheck="false"></textarea>
+			</label>
+			<button id="importButton" disabled>Import</button>
+			<h3>Other options</h3>
+			<button id="deleteAllButton" style="margin-bottom: 1em;">Delete all scripts</button>
 		</div>
 		<div id="aboutContent" style="display: none;">
 			<h2>About</h2>
